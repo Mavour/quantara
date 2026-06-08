@@ -5,12 +5,13 @@ export function formatSignal(decision: QuantaraDecision, options: { alert?: bool
   const { signal, risk } = decision;
   const tp1 = signal.takeProfits[0] ? formatPrice(signal.takeProfits[0]) : '-';
   const tp2 = signal.takeProfits[1] ? formatPrice(signal.takeProfits[1]) : '-';
+  const actionLabel = `${signal.action} ${formatStrategy(signal.strategy)}`.trim();
 
   const lines = [
     options.alert ? 'Quantara Alert' : 'Quantara Signal',
     '',
     `Asset: ${signal.symbol} · ${signal.timeframe}`,
-    `Action: ${signal.action} SCALP`,
+    `Action: ${actionLabel}`,
     `Status: ${decision.status}`,
     '',
     `Entry:      ${formatPrice(signal.entry.min)} - ${formatPrice(signal.entry.max)}`,
@@ -37,4 +38,14 @@ export function formatSignal(decision: QuantaraDecision, options: { alert?: bool
   }
 
   return lines.join('\n');
+}
+
+function formatStrategy(strategy: string): string {
+  const labels: Record<string, string> = {
+    breakout_scalp: 'SCALP',
+    mean_reversion: 'MEAN REVERSION',
+    momentum_continuation: 'MOMENTUM'
+  };
+
+  return labels[strategy] ?? strategy.replaceAll('_', ' ').toUpperCase();
 }

@@ -4,6 +4,7 @@ import { registerRiskCommand } from './commands/risk.command.js';
 import { registerScanCommand } from './commands/scan.command.js';
 import { registerScalpCommand } from './commands/scalp.command.js';
 import { registerSettingsCommand } from './commands/settings.command.js';
+import { registerStartCommand } from './commands/start.command.js';
 import { registerUnwatchCommand } from './commands/unwatch.command.js';
 import { registerWatchCommand } from './commands/watch.command.js';
 import { registerWatchlistCommand } from './commands/watchlist.command.js';
@@ -14,6 +15,7 @@ export function createBot(): Bot<QuantaraContext> {
   const bot = new Bot<QuantaraContext>(requireTelegramToken());
   bot.use(authMiddleware());
   bot.use(contextMiddleware());
+  registerStartCommand(bot);
   registerScanCommand(bot);
   registerScalpCommand(bot);
   registerRiskCommand(bot);
