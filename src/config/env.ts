@@ -20,6 +20,11 @@ const envSchema = z.object({
     .string()
     .optional()
     .default('true')
+    .transform((value) => value.toLowerCase() === 'true'),
+  ALERT_NOTIFY_WAIT_CONFIRMATION: z
+    .string()
+    .optional()
+    .default('true')
     .transform((value) => value.toLowerCase() === 'true')
 });
 

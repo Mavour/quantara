@@ -26,6 +26,7 @@ npm run dev
 - BTC/USDT, ETH/USDT, SOL/USDT.
 - SQLite memory with reply context.
 - Proactive alert scheduler for watchlists.
+- `/start` enables default auto-monitoring for BTC/ETH/SOL.
 - Risk-first signal decisions.
 - DeepSeek via OpenAI-compatible General Compute endpoint.
 

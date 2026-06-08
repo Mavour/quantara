@@ -2,7 +2,7 @@
 
 | Command | Purpose |
 |---|---|
-| `/start` | Show available Quantara commands. |
+| `/start` | Enable default auto-monitoring and show available commands. |
 | `/scan SOL` | Run full signal pipeline. |
 | `/scalp SOLUSDT` | Run scalp-biased signal pipeline. |
 | `/risk 1000 2` | Calculate max loss for capital and risk percent. |

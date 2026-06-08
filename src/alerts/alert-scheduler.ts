@@ -7,11 +7,18 @@ export function startAlertScheduler(bot: Bot<QuantaraContext>, intervalMs = 60_0
   const runner = new WatchlistRunner(bot);
   logger.info('alert_scheduler_started', { intervalMs });
 
+  const initialScan = setTimeout(() => {
+    void runner.tick();
+  }, 5_000);
+
   const interval = setInterval(() => {
     void runner.tick();
   }, intervalMs);
 
-  const stop = () => clearInterval(interval);
+  const stop = () => {
+    clearTimeout(initialScan);
+    clearInterval(interval);
+  };
   process.once('SIGTERM', stop);
   process.once('SIGINT', stop);
   return interval;

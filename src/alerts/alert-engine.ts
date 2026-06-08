@@ -4,6 +4,7 @@ import { Quantara } from '../core/quantara.js';
 import { SignalSnapshotRepository } from '../memory/repositories/signal-snapshot.repository.js';
 import { TelegramMessageRepository } from '../memory/repositories/telegram-message.repository.js';
 import { UserSettingsRepository } from '../memory/repositories/user-settings.repository.js';
+import { formatNoTrade } from '../telegram/formatters/no-trade.formatter.js';
 import { formatSignal } from '../telegram/formatters/signal.formatter.js';
 import type { QuantaraContext } from '../telegram/middleware/context.middleware.js';
 import { logger } from '../utils/logger.js';
@@ -27,7 +28,11 @@ export class AlertEngine {
       riskPercent: settings.riskPerTrade
     });
 
-    if (result.decision.status !== 'TRADE_VALID') {
+    const shouldNotify =
+      result.decision.status === 'TRADE_VALID' ||
+      (env.ALERT_NOTIFY_WAIT_CONFIRMATION && result.decision.status === 'WAIT_CONFIRMATION');
+
+    if (!shouldNotify) {
       logger.info('alert_skipped_status', {
         symbol: result.decision.signal.symbol,
         chatId,
@@ -51,7 +56,10 @@ export class AlertEngine {
       reasoning: result.reasoning
     });
 
-    const text = formatSignal(result.decision, { alert: true });
+    const text =
+      result.decision.status === 'TRADE_VALID'
+        ? formatSignal(result.decision, { alert: true })
+        : `${formatNoTrade(result.decision)}\n\n----------------\nReply to this message to ask follow-up questions.`;
     const sent = await this.bot.api.sendMessage(chatId, text);
     this.messages.insert({
       telegramChatId: chatId,
