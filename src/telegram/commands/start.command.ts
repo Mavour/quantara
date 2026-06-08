@@ -17,6 +17,7 @@ export function registerStartCommand(bot: Bot<QuantaraContext>): void {
         '',
         'Auto mode is ON.',
         `Monitoring by default: ${supportedSymbols.join(', ')}`,
+        'Discovery scanner is ON for top-volume USDT markets.',
         `Timeframe: ${user.defaultTimeframe}`,
         '',
         'Commands:',

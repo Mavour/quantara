@@ -51,6 +51,18 @@ export class BinanceAdapter {
     };
   }
 
+  async fetchTopUsdtSymbols(limit: number): Promise<string[]> {
+    const tickers = await this.exchange.fetchTickers();
+    return Object.values(tickers)
+      .filter((ticker) => ticker.symbol?.endsWith('/USDT:USDT') || ticker.symbol?.endsWith('/USDT'))
+      .filter((ticker) => typeof ticker.quoteVolume === 'number' && ticker.quoteVolume > 0)
+      .sort((a, b) => (b.quoteVolume ?? 0) - (a.quoteVolume ?? 0))
+      .map((ticker) => normalizeLinearSymbol(ticker.symbol))
+      .filter((symbol): symbol is string => symbol !== null)
+      .filter(unique)
+      .slice(0, limit);
+  }
+
   private async fetchFundingRateSafe(symbol: string): Promise<number | null> {
     try {
       const rate = await this.exchange.fetchFundingRate(symbol);
@@ -59,4 +71,14 @@ export class BinanceAdapter {
       return null;
     }
   }
+}
+
+function normalizeLinearSymbol(symbol: string | undefined): string | null {
+  if (!symbol) return null;
+  const normalized = symbol.replace(':USDT', '');
+  return /^[A-Z0-9]+\/USDT$/.test(normalized) ? normalized : null;
+}
+
+function unique(value: string, index: number, values: string[]): boolean {
+  return values.indexOf(value) === index;
 }

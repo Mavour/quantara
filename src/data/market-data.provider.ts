@@ -12,4 +12,8 @@ export class MarketDataProvider {
     const data = await this.fetch(symbol, '1m');
     return data.currentPrice;
   }
+
+  discoverTopSymbols(limit: number): Promise<string[]> {
+    return this.binance.fetchTopUsdtSymbols(limit);
+  }
 }

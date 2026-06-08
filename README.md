@@ -27,6 +27,7 @@ npm run dev
 - SQLite memory with reply context.
 - Proactive alert scheduler for watchlists.
 - `/start` enables default auto-monitoring for BTC/ETH/SOL.
+- Market discovery scanner can scan top-volume USDT markets automatically.
 - Risk-first signal decisions.
 - DeepSeek via OpenAI-compatible General Compute endpoint.
 

@@ -25,7 +25,13 @@ const envSchema = z.object({
     .string()
     .optional()
     .default('true')
-    .transform((value) => value.toLowerCase() === 'true')
+    .transform((value) => value.toLowerCase() === 'true'),
+  DISCOVERY_ENABLED: z
+    .string()
+    .optional()
+    .default('true')
+    .transform((value) => value.toLowerCase() === 'true'),
+  DISCOVERY_TOP_SYMBOLS: z.coerce.number().int().positive().max(100).default(25)
 });
 
 export const env = envSchema.parse(process.env);

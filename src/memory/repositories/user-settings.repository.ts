@@ -55,4 +55,9 @@ export class UserSettingsRepository {
     const row = this.db.prepare('SELECT * FROM users WHERE id = ?').get(id) as UserSettingsRow | undefined;
     return row ? mapRow(row) : null;
   }
+
+  listAll(): UserSettings[] {
+    const rows = this.db.prepare('SELECT * FROM users').all() as UserSettingsRow[];
+    return rows.map(mapRow);
+  }
 }
