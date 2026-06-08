@@ -19,6 +19,14 @@ To start Telegram mode, set `TELEGRAM_BOT_TOKEN` and run:
 npm run dev
 ```
 
+LLM config:
+
+```env
+GENERALCOMPUTE_BASE_URL=https://app.generalcompute.com/v1
+GENERALCOMPUTE_API_KEY=your_key
+GENERALCOMPUTE_MODEL=deepseek-v3.1
+```
+
 ## MVP Scope
 
 - Telegram bot via grammY.

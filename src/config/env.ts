@@ -8,6 +8,7 @@ const envSchema = z.object({
   TELEGRAM_ALLOWED_CHAT_IDS: z.string().optional().default(''),
   GENERALCOMPUTE_BASE_URL: z.string().url().default('https://app.generalcompute.com/v1'),
   GENERALCOMPUTE_API_KEY: z.string().optional().default(''),
+  GENERALCOMPUTE_MODEL: z.string().default('deepseek-v3.1'),
   BINANCE_API_KEY: z.string().optional().default(''),
   BINANCE_API_SECRET: z.string().optional().default(''),
   DATABASE_PATH: z.string().default('./data/quantara.db'),
