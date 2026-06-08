@@ -1,0 +1,33 @@
+{
+  "name": "quantara",
+  "version": "0.1.0",
+  "description": "Telegram crypto trading advisor with deterministic signals, risk gates, and DeepSeek reasoning.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx src/app.ts",
+    "migrate": "tsx scripts/migrate.ts",
+    "cli": "tsx scripts/dev.ts",
+    "test": "vitest",
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "ccxt": "^4.4.0",
+    "dotenv": "^16.4.0",
+    "grammy": "^1.30.0",
+    "technicalindicators": "^3.1.0",
+    "winston": "^3.13.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "vitest": "^1.6.0"
+  }
+}
