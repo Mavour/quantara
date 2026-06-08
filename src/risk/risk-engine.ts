@@ -17,6 +17,7 @@ export class RiskEngine {
     signal: SignalCandidate;
     features: MarketFeatures;
     riskPercent?: number;
+    enforceExposureGate?: boolean;
   }): RiskResult {
     const riskPercent = params.riskPercent ?? riskConfig.defaultRiskPercent;
     const vetoReasons: string[] = [];
@@ -40,7 +41,7 @@ export class RiskEngine {
     ) {
       vetoReasons.push('Strong downtrend conflicts with BUY signal');
     }
-    if (params.telegramChatId) {
+    if (params.telegramChatId && params.enforceExposureGate) {
       const exposure = this.exposureGate.canOpen(params.telegramChatId);
       if (!exposure.allowed) {
         vetoReasons.push(`Max concurrent signals reached (${riskConfig.maxConcurrentSignals})`);

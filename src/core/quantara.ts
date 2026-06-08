@@ -36,6 +36,7 @@ export class Quantara {
     telegramChatId?: string;
     riskPercent?: number;
     useLlm?: boolean;
+    enforceExposureGate?: boolean;
   }): Promise<QuantaraRunResult> {
     const marketData = await this.marketData.fetch(params.symbol, params.timeframe);
     const features = this.featureEngine.calculate(marketData);
@@ -44,7 +45,8 @@ export class Quantara {
       telegramChatId: params.telegramChatId,
       signal,
       features,
-      riskPercent: params.riskPercent
+      riskPercent: params.riskPercent,
+      enforceExposureGate: params.enforceExposureGate
     });
     const status = decideStatus(signal, risk);
     const reasoning = {

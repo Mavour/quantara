@@ -456,7 +456,7 @@ Rule 6: VETO if features.trendDirection === 'down'
              AND features.trendStrength > 70
         reason: "Strong downtrend conflicts with BUY signal"
 
-Rule 7: VETO if active signal count for chat_id >= MAX_CONCURRENT_SIGNALS
+Rule 7: Optional position gate can VETO if active signal count for chat_id >= MAX_CONCURRENT_SIGNALS
         reason: "Max concurrent signals reached ({MAX_CONCURRENT_SIGNALS})"
 
 Rule 8: WAIT_CONFIRMATION, not VETO, if confidence is between 60 and 69
