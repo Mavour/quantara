@@ -102,6 +102,21 @@ export class SignalSnapshotRepository {
     return row.count;
   }
 
+  hasRecentActiveSignal(telegramChatId: string, symbol: string, windowMinutes: number): boolean {
+    const row = this.db
+      .prepare(
+        `SELECT id
+         FROM signal_snapshots
+         WHERE telegram_chat_id = ?
+           AND symbol = ?
+           AND status = 'ACTIVE'
+           AND created_at > datetime('now', ?)
+         LIMIT 1`
+      )
+      .get(telegramChatId, symbol, `-${windowMinutes} minutes`) as { id: number } | undefined;
+    return Boolean(row);
+  }
+
   markInvalidated(id: number): void {
     this.db.prepare("UPDATE signal_snapshots SET status = 'INVALIDATED' WHERE id = ?").run(id);
   }

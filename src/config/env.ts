@@ -13,7 +13,14 @@ const envSchema = z.object({
   DATABASE_PATH: z.string().default('./data/quantara.db'),
   DEFAULT_RISK_PERCENT: z.coerce.number().positive().max(100).default(1),
   MAX_CONCURRENT_SIGNALS: z.coerce.number().int().positive().default(2),
-  LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info')
+  LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
+  ALERT_SCAN_INTERVAL_MINUTES: z.coerce.number().int().positive().default(5),
+  ALERT_DEDUP_WINDOW_MINUTES: z.coerce.number().int().positive().default(30),
+  ALERT_ENABLED: z
+    .string()
+    .optional()
+    .default('true')
+    .transform((value) => value.toLowerCase() === 'true')
 });
 
 export const env = envSchema.parse(process.env);

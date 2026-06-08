@@ -1,13 +1,13 @@
 import type { QuantaraDecision } from '../../core/types.js';
 import { formatPrice, round } from '../../utils/number.js';
 
-export function formatSignal(decision: QuantaraDecision): string {
+export function formatSignal(decision: QuantaraDecision, options: { alert?: boolean } = {}): string {
   const { signal, risk } = decision;
   const tp1 = signal.takeProfits[0] ? formatPrice(signal.takeProfits[0]) : '-';
   const tp2 = signal.takeProfits[1] ? formatPrice(signal.takeProfits[1]) : '-';
 
-  return [
-    'Quantara Signal',
+  const lines = [
+    options.alert ? 'Quantara Alert' : 'Quantara Signal',
     '',
     `Asset: ${signal.symbol} · ${signal.timeframe}`,
     `Action: ${signal.action} SCALP`,
@@ -30,5 +30,11 @@ export function formatSignal(decision: QuantaraDecision): string {
     `Position Size: ${risk.positionSizePercent}% max risk`,
     '',
     decision.narrative
-  ].join('\n');
+  ];
+
+  if (options.alert) {
+    lines.push('', '----------------', 'Reply to this message to ask follow-up questions.');
+  }
+
+  return lines.join('\n');
 }

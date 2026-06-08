@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS watchlists (
   mode TEXT NOT NULL DEFAULT 'scan',
   timeframe TEXT NOT NULL DEFAULT '5m',
   enabled INTEGER NOT NULL DEFAULT 1,
+  last_scanned_at TEXT,
+  last_alerted_at TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 

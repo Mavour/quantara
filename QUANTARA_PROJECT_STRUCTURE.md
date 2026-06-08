@@ -81,6 +81,11 @@ MAX_CONCURRENT_SIGNALS=2
 
 # Logging
 LOG_LEVEL=info
+
+# Alert scheduler
+ALERT_SCAN_INTERVAL_MINUTES=5
+ALERT_DEDUP_WINDOW_MINUTES=30
+ALERT_ENABLED=true
 ```
 
 ## Package Dependencies

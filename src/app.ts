@@ -1,4 +1,5 @@
 import { env } from './config/env.js';
+import { startAlertScheduler } from './alerts/alert-scheduler.js';
 import { runMigrations } from './memory/db.js';
 import { createBot } from './telegram/bot.js';
 import { logger } from './utils/logger.js';
@@ -11,4 +12,8 @@ if (!env.TELEGRAM_BOT_TOKEN) {
   const bot = createBot();
   logger.info('telegram_bot_starting');
   bot.start();
+  if (env.ALERT_ENABLED) {
+    startAlertScheduler(bot, env.ALERT_SCAN_INTERVAL_MINUTES * 60_000);
+  }
+  logger.info('quantara_running', { alertScheduler: env.ALERT_ENABLED ? 'ON' : 'OFF' });
 }

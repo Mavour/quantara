@@ -50,4 +50,9 @@ export class UserSettingsRepository {
       .run(riskPerTrade, telegramChatId);
     return this.getOrCreate(telegramChatId);
   }
+
+  findById(id: number): UserSettings | null {
+    const row = this.db.prepare('SELECT * FROM users WHERE id = ?').get(id) as UserSettingsRow | undefined;
+    return row ? mapRow(row) : null;
+  }
 }

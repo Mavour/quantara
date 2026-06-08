@@ -25,6 +25,7 @@ npm run dev
 - Binance market data via ccxt.
 - BTC/USDT, ETH/USDT, SOL/USDT.
 - SQLite memory with reply context.
+- Proactive alert scheduler for watchlists.
 - Risk-first signal decisions.
 - DeepSeek via OpenAI-compatible General Compute endpoint.
 
