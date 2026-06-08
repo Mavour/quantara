@@ -27,7 +27,16 @@ export class AlertEngine {
       riskPercent: settings.riskPerTrade
     });
 
-    if (result.decision.status !== 'TRADE_VALID') return;
+    if (result.decision.status !== 'TRADE_VALID') {
+      logger.info('alert_skipped_status', {
+        symbol: result.decision.signal.symbol,
+        chatId,
+        status: result.decision.status,
+        confidence: result.decision.signal.confidence,
+        vetoReasons: result.decision.risk.vetoReasons
+      });
+      return;
+    }
 
     if (this.snapshots.hasRecentActiveSignal(chatId, result.decision.signal.symbol, env.ALERT_DEDUP_WINDOW_MINUTES)) {
       logger.info('alert_skipped_duplicate', { symbol, chatId, windowMinutes: env.ALERT_DEDUP_WINDOW_MINUTES });
