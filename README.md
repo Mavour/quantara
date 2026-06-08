@@ -22,7 +22,7 @@ npm run dev
 LLM config:
 
 ```env
-GENERALCOMPUTE_BASE_URL=https://app.generalcompute.com/v1
+GENERALCOMPUTE_BASE_URL=https://api.generalcompute.com/v1
 GENERALCOMPUTE_API_KEY=your_key
 GENERALCOMPUTE_MODEL=deepseek-v3.1
 ```

@@ -65,7 +65,7 @@ Keputusan ini ditutup untuk build pertama supaya scope tidak melebar.
 TELEGRAM_BOT_TOKEN=
 
 # LLM
-GENERALCOMPUTE_BASE_URL=https://app.generalcompute.com/v1
+GENERALCOMPUTE_BASE_URL=https://api.generalcompute.com/v1
 GENERALCOMPUTE_API_KEY=
 GENERALCOMPUTE_MODEL=deepseek-v3.1
 

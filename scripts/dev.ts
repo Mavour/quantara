@@ -1,4 +1,6 @@
 import { Quantara } from '../src/core/quantara.js';
+import { DeepSeekClient } from '../src/advisors/deepseek/deepseek.client.js';
+import { llmConfig } from '../src/config/llm.js';
 import { formatNoTrade } from '../src/telegram/formatters/no-trade.formatter.js';
 import { formatRisk } from '../src/telegram/formatters/risk.formatter.js';
 import { formatSignal } from '../src/telegram/formatters/signal.formatter.js';
@@ -26,8 +28,30 @@ if (command === 'risk') {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
   }
+} else if (command === 'llm') {
+  try {
+    const content = await new DeepSeekClient().complete([
+      { role: 'system', content: 'Reply with exactly: ok' },
+      { role: 'user', content: 'health check' }
+    ]);
+    console.log(JSON.stringify({ baseUrl: llmConfig.baseUrl, model: llmConfig.model, content }, null, 2));
+  } catch (error) {
+    console.error(
+      JSON.stringify(
+        {
+          baseUrl: llmConfig.baseUrl,
+          model: llmConfig.model,
+          error: error instanceof Error ? error.message : String(error)
+        },
+        null,
+        2
+      )
+    );
+    process.exitCode = 1;
+  }
 } else {
   console.log('Usage: npx tsx scripts/dev.ts scan SOLUSDT 5m');
   console.log('       npx tsx scripts/dev.ts scalp BTCUSDT 5m');
   console.log('       npx tsx scripts/dev.ts risk 1000 2');
+  console.log('       npx tsx scripts/dev.ts llm');
 }
